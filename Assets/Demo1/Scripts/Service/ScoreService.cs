@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using strange.extensions.dispatcher.eventdispatcher.api;
+using System;
 
 public class ScoreService : IScoreService
 {
+    [Inject]
+    public IEventDispatcher dispatcher { get; set; }
+
     //该函数要进行回调
     public void OnReceiveScore()
     {
-        int score = Random.Range(0, 100);
+        int score = UnityEngine.Random.Range(0, 100);
+        dispatcher.Dispatch(Demo1ServiceEvent.RequestScore,score);
     }
 
     public void RequestScore(string url)
